@@ -69,12 +69,17 @@ npm run dev                   # http://localhost:5173
 **`client/.env`**: `VITE_API_URL=http://localhost:5001/api`
 
 ### Seeded logins
-| Role | Email | Password |
-| --- | --- | --- |
-| Admin | `admin@restaurant.test` | `Admin@12345` |
-| Customer | `customer@restaurant.test` | `Customer@123` |
+The seed script (`npm run seed`) bootstraps an admin and a customer account. Set the
+credentials via environment variables — **never hardcode them here**:
 
-(Credentials are configurable via the seed env vars; the demo values above are for local dev only — rotate them for any real deployment.)
+| Role | Email env var | Password env var |
+| --- | --- | --- |
+| Admin | `SEED_ADMIN_EMAIL` | `SEED_ADMIN_PASSWORD` |
+| Customer | `SEED_CUSTOMER_EMAIL` | `SEED_CUSTOMER_PASSWORD` |
+
+Set these in `server/.env` for local dev (see `server/.env.example`) or in your host's
+dashboard for a deployment. Use strong, unique passwords and rotate any value that was
+ever committed to git history.
 
 ---
 
