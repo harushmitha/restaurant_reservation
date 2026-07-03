@@ -1,0 +1,21 @@
+# Render Blueprint for the backend API.
+# Set MONGODB_URI, JWT_SECRET, and CLIENT_ORIGIN as secret env vars in the
+# Render dashboard — never commit real secrets to the repo.
+services:
+  - type: web
+    name: restaurant-reservation-api
+    runtime: node
+    rootDir: server
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: JWT_EXPIRES_IN
+        value: 1d
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLIENT_ORIGIN
+        sync: false

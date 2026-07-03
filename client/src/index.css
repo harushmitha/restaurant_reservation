@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* ============================================================
+   Harshu's Kitchen — classic restaurant theme, expressed as Tailwind
+   v4 theme tokens. Custom colors/fonts below become utilities
+   automatically (e.g. bg-wine, text-ink, font-display).
+   ============================================================ */
+@theme {
+  --font-sans: "Lato", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+
+  --color-parchment: #f3ecdd;
+  --color-parchment-2: #efe6d3;
+  --color-surface: #fffdf7;
+  --color-ink: #2b2620;
+  --color-ink-soft: #6f6656;
+  --color-line: #e2d8c2;
+  --color-line-strong: #d3c6a9;
+
+  --color-wine: #7a1f33;
+  --color-wine-dark: #5e1626;
+  --color-forest: #2f5d3f;
+  --color-forest-dark: #234a31;
+  --color-gold: #b48a4a;
+  --color-gold-dark: #916a30;
+  --color-terracotta: #a23824;
+  --color-terracotta-dark: #852c1b;
+}
+
+/* ---------- Base element styling ---------- */
+@layer base {
+  body {
+    @apply bg-parchment text-ink font-sans antialiased;
+    background-image: radial-gradient(circle at 50% -10%, #fbf6ea 0%, #f3ecdd 55%, #efe6d3 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display font-semibold tracking-tight;
+  }
+  /* All text inputs and selects share the classic parchment field style. */
+  input,
+  select {
+    @apply mt-1.5 w-full rounded-md border border-line-strong bg-surface px-3 py-2.5 text-[15px] text-ink transition
+      focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/25;
+  }
+  a {
+    @apply font-semibold text-wine hover:text-wine-dark;
+  }
+  /* Field labels are uppercase, spaced, muted. Override mb-0 inside inline form rows. */
+  label {
+    @apply mb-4 block text-xs font-bold uppercase tracking-wide text-ink-soft;
+  }
+}
+
+/* ---------- Reusable component atoms (buttons repeat with variants) ---------- */
+@layer components {
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center rounded-md bg-wine px-5 py-2.5
+      text-sm font-bold tracking-wide text-white shadow-sm transition
+      hover:brightness-110 active:translate-y-px
+      disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:brightness-100;
+  }
+  .btn-primary {
+    @apply bg-wine;
+  }
+  .btn-danger {
+    @apply bg-terracotta;
+  }
+  .btn-ghost {
+    @apply border border-line-strong bg-transparent text-ink shadow-none hover:bg-black/5 hover:brightness-100;
+  }
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+
+  /* Page shell */
+  .container {
+    @apply mx-auto w-full max-w-[1080px] px-6;
+  }
+
+  /* Cards with a soft classic shadow */
+  .card {
+    @apply mb-6 rounded-lg border border-line bg-surface p-6 shadow-[0_1px_2px_rgba(43,38,32,0.05),0_8px_24px_rgba(43,38,32,0.06)] md:p-7;
+  }
+  /* Section heading inside a card: gold underline accent */
+  .card-title {
+    @apply relative mb-5 border-b border-line pb-3 text-2xl
+      after:absolute after:-bottom-px after:left-0 after:h-0.5 after:w-14 after:bg-gold after:content-[''];
+  }
+
+  /* Data tables */
+  .data-table {
+    @apply w-full border-collapse text-[14.5px];
+  }
+  .data-table thead th {
+    @apply border-b-2 border-line-strong bg-[#f6efdf] px-3.5 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-ink-soft;
+  }
+  .data-table td {
+    @apply border-b border-line px-3.5 py-3 text-left align-middle;
+  }
+  .data-table tbody tr:hover td {
+    @apply bg-[#fbf6ea];
+  }
+
+  /* Status pills */
+  .pill {
+    @apply inline-block rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide;
+  }
+  .pill-confirmed {
+    @apply border border-[#cadfca] bg-[#e6efe6] text-forest-dark;
+  }
+  .pill-cancelled {
+    @apply border border-[#ecccc2] bg-[#f6e5e0] text-terracotta-dark;
+  }
+
+  /* Alerts */
+  .alert {
+    @apply mb-4 rounded-md border-l-4 px-4 py-3 text-sm;
+  }
+  .alert-error {
+    @apply border-terracotta bg-[#f8e8e2] text-terracotta-dark;
+  }
+  .alert-success {
+    @apply border-forest bg-[#e6efe6] text-forest-dark;
+  }
+
+  .muted {
+    @apply text-[13.5px] text-ink-soft;
+  }
+
+  /* Page heading with gold underline accent */
+  .page-title {
+    @apply relative mb-6 mt-9 flex items-center gap-3.5 border-b border-line pb-3.5 text-[34px]
+      after:absolute after:-bottom-px after:left-0 after:h-0.5 after:w-[60px] after:bg-gold after:content-[''];
+  }
+}
