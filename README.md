@@ -23,7 +23,8 @@
   <a href="https://restaurant-reservation-puce-omega.vercel.app/"><b>🌐 Live App</b></a> &nbsp;·&nbsp;
   <a href="https://restaurant-reservation-c8rx.onrender.com/api/health"><b>🩺 API Health</b></a> &nbsp;·&nbsp;
   <a href="#-screenshots"><b>📸 Screenshots</b></a> &nbsp;·&nbsp;
-  <a href="#1-setup--run-locally"><b>⚙️ Setup</b></a>
+  <a href="#1-setup--run-locally"><b>⚙️ Setup</b></a> &nbsp;·&nbsp;
+  <a href="DOCUMENTATION.md"><b>📐 Engineering Docs</b></a>
 </p>
 
 ### 🔗 Live Demo
