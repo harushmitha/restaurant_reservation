@@ -278,9 +278,3 @@ Following these steps keeps the error contract, the security model, and the docu
 sync by construction.
 
 ---
-
-<div align="center">
-
-**Engineering Documentation** · maintained alongside the code · see [`README.md`](README.md) for setup and usage
-
-</div>
