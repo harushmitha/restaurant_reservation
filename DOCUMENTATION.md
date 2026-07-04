@@ -2,7 +2,7 @@
 
 **Project:** Restaurant Reservation Management System ("Harshu's Kitchen")
 **Audience:** Reviewers, maintainers, and contributing engineers
-**Companion to:** [`README.md`](README.md) — this document expands on **code quality** and **documentation clarity**, the two dimensions that govern how the system is built and explained.
+**Companion to:** [`https://github.com/harushmitha/restaurant_reservation/blob/main/README.md`](README.md) — this document expands on **code quality** and **documentation clarity**, the two dimensions that govern how the system is built and explained.
 
 > **Purpose of this document.** The `README` tells you _how to run and use_ the system.
 > This document explains _how the system is engineered and documented_ — the conventions,
