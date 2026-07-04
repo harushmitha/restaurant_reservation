@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="320" viewBox="0 0 1200 320" role="img" aria-label="Harshu's Kitchen — Restaurant Reservation Management System">
+  <!-- Background -->
+  <rect width="1200" height="320" fill="#16261e"/>
+  <rect width="1200" height="320" fill="#0f1b15" opacity="0.35"/>
+
+  <!-- Orange accent bar -->
+  <rect x="0" y="0" width="10" height="320" fill="#e07d3b"/>
+
+  <!-- Decorative plate rings (right) -->
+  <circle cx="1010" cy="160" r="120" fill="none" stroke="#1f3b2d" stroke-width="2"/>
+  <circle cx="1010" cy="160" r="92"  fill="none" stroke="#1f3b2d" stroke-width="2"/>
+  <circle cx="1010" cy="160" r="64"  fill="none" stroke="#e07d3b" stroke-width="2" opacity="0.55"/>
+  <circle cx="1010" cy="160" r="36"  fill="none" stroke="#1f3b2d" stroke-width="2"/>
+
+  <!-- Utensils glyph (fork + knife) inside the plate -->
+  <g stroke="#e07d3b" stroke-width="4" stroke-linecap="round" fill="none">
+    <line x1="998"  y1="128" x2="998"  y2="192"/>
+    <line x1="990"  y1="128" x2="990"  y2="150"/>
+    <line x1="1006" y1="128" x2="1006" y2="150"/>
+    <path d="M1026 128 q10 6 10 26 q0 12 -10 12 l0 26"/>
+  </g>
+
+  <!-- Kicker -->
+  <text x="70" y="96" font-family="Arial, Helvetica, sans-serif" font-size="20" letter-spacing="5" font-weight="700" fill="#e07d3b">HARSHU'S KITCHEN</text>
+
+  <!-- Title -->
+  <text x="68" y="168" font-family="Georgia, 'Times New Roman', serif" font-size="60" font-weight="700" fill="#f4ede0">Restaurant Reservation</text>
+  <text x="68" y="228" font-family="Georgia, 'Times New Roman', serif" font-size="60" font-weight="700" fill="#f4ede0">Management System</text>
+
+  <!-- Tagline -->
+  <text x="70" y="272" font-family="Arial, Helvetica, sans-serif" font-size="20" fill="#b9c4bb">Role-based access · double-booking prevention · React + Express + MongoDB</text>
+</svg>
