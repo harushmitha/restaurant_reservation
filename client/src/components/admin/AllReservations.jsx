@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { reservationApi, apiErrorMessage } from "../../api/client.js";
 import { TIME_SLOTS } from "../../constants.js";
 import Alert from "../common/Alert.jsx";
+import { Clipboard, Calendar, Filter, Check, X, Pencil, Trash } from "../common/icons.jsx";
 
 /** Admin view: every reservation, filterable by date/status, with inline edit + cancel. */
 export default function AllReservations() {
@@ -64,11 +65,16 @@ export default function AllReservations() {
 
   return (
     <div className="card">
-      <h2 className="card-title">All reservations</h2>
+      <h2 className="card-title">
+        <Clipboard className="icon" size={20} />
+        All reservations
+      </h2>
 
       <div className="mb-4 flex flex-wrap items-end gap-4">
         <label className="mb-0">
-          Date
+          <span className="inline-flex items-center gap-1.5">
+            <Calendar size={13} /> Date
+          </span>
           <input
             type="date"
             value={filters.date}
@@ -76,7 +82,9 @@ export default function AllReservations() {
           />
         </label>
         <label className="mb-0">
-          Status
+          <span className="inline-flex items-center gap-1.5">
+            <Filter size={13} /> Status
+          </span>
           <select
             value={filters.status}
             onChange={(e) => setFilters({ ...filters, status: e.target.value })}
@@ -87,6 +95,7 @@ export default function AllReservations() {
           </select>
         </label>
         <button className="btn btn-ghost" onClick={() => setFilters({ date: "", status: "" })}>
+          <X size={15} />
           Clear
         </button>
       </div>
@@ -155,9 +164,11 @@ export default function AllReservations() {
                     <td>
                       <div className="flex gap-2">
                         <button className="btn btn-primary btn-sm" onClick={() => saveEdit(r._id)}>
+                          <Check size={14} />
                           Save
                         </button>
                         <button className="btn btn-ghost btn-sm" onClick={() => setEditing(null)}>
+                          <X size={14} />
                           Cancel
                         </button>
                       </div>
@@ -175,11 +186,15 @@ export default function AllReservations() {
                     <td>{r.table ? `#${r.table.tableNumber} (${r.table.capacity})` : "—"}</td>
                     <td>{r.guests}</td>
                     <td>
-                      <span className={`pill pill-${r.status}`}>{r.status}</span>
+                      <span className={`pill pill-${r.status}`}>
+                        {r.status === "cancelled" ? <X size={12} /> : <Check size={12} />}
+                        {r.status}
+                      </span>
                     </td>
                     <td>
                       <div className="flex gap-2">
                         <button className="btn btn-ghost btn-sm" onClick={() => startEdit(r)}>
+                          <Pencil size={14} />
                           Edit
                         </button>
                         <button
@@ -187,6 +202,7 @@ export default function AllReservations() {
                           disabled={r.status === "cancelled"}
                           onClick={() => cancel(r._id)}
                         >
+                          <Trash size={14} />
                           Cancel
                         </button>
                       </div>

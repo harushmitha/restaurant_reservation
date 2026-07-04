@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { tableApi, apiErrorMessage } from "../../api/client.js";
 import Alert from "../common/Alert.jsx";
+import { Grid, Users, Plus, Power } from "../common/icons.jsx";
 
 /** Admin CRUD for tables (create, edit capacity, enable/disable). */
 export default function TableManager() {
@@ -61,12 +62,17 @@ export default function TableManager() {
 
   return (
     <div className="card">
-      <h2 className="card-title">Manage tables</h2>
+      <h2 className="card-title">
+        <Grid className="icon" size={20} />
+        Manage tables
+      </h2>
       <Alert message={error} />
 
       <form onSubmit={create} className="mb-4 flex flex-wrap items-end gap-4">
         <label className="mb-0">
-          Table #
+          <span className="inline-flex items-center gap-1.5">
+            <Grid size={13} /> Table #
+          </span>
           <input
             type="number"
             min={1}
@@ -76,7 +82,9 @@ export default function TableManager() {
           />
         </label>
         <label className="mb-0">
-          Capacity
+          <span className="inline-flex items-center gap-1.5">
+            <Users size={13} /> Capacity
+          </span>
           <input
             type="number"
             min={1}
@@ -85,7 +93,10 @@ export default function TableManager() {
             required
           />
         </label>
-        <button className="btn btn-primary">Add table</button>
+        <button className="btn btn-primary">
+          <Plus size={16} />
+          Add table
+        </button>
       </form>
 
       {loading ? (
@@ -116,9 +127,14 @@ export default function TableManager() {
                       }}
                     />
                   </td>
-                  <td>{t.isActive ? "Yes" : "No"}</td>
+                  <td>
+                    <span className={`pill ${t.isActive ? "pill-confirmed" : "pill-cancelled"}`}>
+                      {t.isActive ? "Active" : "Inactive"}
+                    </span>
+                  </td>
                   <td>
                     <button className="btn btn-ghost btn-sm" onClick={() => toggleActive(t)}>
+                      <Power size={14} />
                       {t.isActive ? "Disable" : "Enable"}
                     </button>
                   </td>

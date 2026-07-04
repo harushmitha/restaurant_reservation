@@ -28,8 +28,10 @@ async function seed() {
   await Reservation.syncIndexes();
 
   // ----- Admin user -----
-  const adminEmail = (process.env.SEED_ADMIN_EMAIL || "admin@restaurant.test").toLowerCase();
-  const adminPassword = process.env.SEED_ADMIN_PASSWORD || "Admin@12345";
+  // Credentials must come from the environment — no defaults are baked into the
+  // repo so that no real password is ever committed to git history.
+  const adminEmail = requireEnv("SEED_ADMIN_EMAIL").toLowerCase();
+  const adminPassword = requireEnv("SEED_ADMIN_PASSWORD");
 
   let admin = await User.findOne({ email: adminEmail });
   if (!admin) {
@@ -48,17 +50,23 @@ async function seed() {
     console.log(`[seed] admin already exists: ${adminEmail}`);
   }
 
-  // ----- Demo customer -----
-  const customerEmail = "customer@restaurant.test";
-  let customer = await User.findOne({ email: customerEmail });
-  if (!customer) {
-    customer = await User.create({
-      name: "Demo Customer",
-      email: customerEmail,
-      password: "Customer@123",
-      role: "customer",
-    });
-    console.log(`[seed] created demo customer: ${customerEmail} / Customer@123`);
+  // ----- Demo customer (optional) -----
+  // Only seeded when both env vars are supplied; skipped otherwise.
+  const customerEmail = process.env.SEED_CUSTOMER_EMAIL?.toLowerCase();
+  const customerPassword = process.env.SEED_CUSTOMER_PASSWORD;
+  if (customerEmail && customerPassword) {
+    const customer = await User.findOne({ email: customerEmail });
+    if (!customer) {
+      await User.create({
+        name: "Demo Customer",
+        email: customerEmail,
+        password: customerPassword, // hashed by the User pre-save hook
+        role: "customer",
+      });
+      console.log(`[seed] created demo customer: ${customerEmail}`);
+    }
+  } else {
+    console.log("[seed] SEED_CUSTOMER_* not set — skipping demo customer");
   }
 
   // ----- Tables (upsert by tableNumber) -----
@@ -71,12 +79,27 @@ async function seed() {
   }
   console.log(`[seed] ensured ${TABLES.length} tables`);
 
-  console.log("\n[seed] done. Login as:");
-  console.log(`  admin    -> ${adminEmail} / ${adminPassword}`);
-  console.log(`  customer -> ${customerEmail} / Customer@123`);
+  // Never log passwords — only the emails that were provisioned.
+  console.log("\n[seed] done. Provisioned admin:", adminEmail);
+  if (customerEmail && customerPassword) {
+    console.log("[seed] provisioned customer:", customerEmail);
+  }
 
   await mongoose.disconnect();
   process.exit(0);
+}
+
+/** Read a required env var or fail loudly — avoids silently seeding a default password. */
+function requireEnv(name) {
+  const value = process.env[name];
+  if (!value) {
+    console.error(
+      `[seed] ${name} is not set. Define it in server/.env (see server/.env.example) ` +
+        `before running the seed script.`
+    );
+    process.exit(1);
+  }
+  return value;
 }
 
 seed().catch(async (err) => {

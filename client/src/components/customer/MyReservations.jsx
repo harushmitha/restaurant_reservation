@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { reservationApi, apiErrorMessage } from "../../api/client.js";
 import Alert from "../common/Alert.jsx";
+import { Clipboard, Check, X, Trash } from "../common/icons.jsx";
 
 export default function MyReservations({ refreshKey }) {
   const [reservations, setReservations] = useState([]);
@@ -35,7 +36,10 @@ export default function MyReservations({ refreshKey }) {
 
   return (
     <div className="card">
-      <h2 className="card-title">My reservations</h2>
+      <h2 className="card-title">
+        <Clipboard className="icon" size={20} />
+        My reservations
+      </h2>
       <Alert message={error} />
       {loading ? (
         <p className="muted">Loading…</p>
@@ -62,7 +66,10 @@ export default function MyReservations({ refreshKey }) {
                   <td>{r.table ? `#${r.table.tableNumber}` : "—"}</td>
                   <td>{r.guests}</td>
                   <td>
-                    <span className={`pill pill-${r.status}`}>{r.status}</span>
+                    <span className={`pill pill-${r.status}`}>
+                      {r.status === "cancelled" ? <X size={12} /> : <Check size={12} />}
+                      {r.status}
+                    </span>
                   </td>
                   <td>
                     <button
@@ -70,6 +77,7 @@ export default function MyReservations({ refreshKey }) {
                       disabled={r.status === "cancelled"}
                       onClick={() => cancel(r._id)}
                     >
+                      <Trash size={14} />
                       Cancel
                     </button>
                   </td>

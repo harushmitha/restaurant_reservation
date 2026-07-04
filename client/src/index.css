@@ -1,38 +1,54 @@
 @import "tailwindcss";
 
 /* ============================================================
-   Harshu's Kitchen — classic restaurant theme, expressed as Tailwind
-   v4 theme tokens. Custom colors/fonts below become utilities
-   automatically (e.g. bg-wine, text-ink, font-display).
+   Harshu's Kitchen — "Bamzi"-inspired theme: deep teal-green
+   chrome, warm cream canvas, and a single orange accent.
+   Custom colors/fonts below become Tailwind v4 utilities
+   automatically (e.g. bg-brand, text-accent, font-display).
    ============================================================ */
 @theme {
   --font-sans: "Lato", ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
   --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
 
-  --color-parchment: #f3ecdd;
-  --color-parchment-2: #efe6d3;
-  --color-surface: #fffdf7;
-  --color-ink: #2b2620;
-  --color-ink-soft: #6f6656;
-  --color-line: #e2d8c2;
-  --color-line-strong: #d3c6a9;
+  /* Canvas + surfaces */
+  --color-parchment: #f4ede0;
+  --color-parchment-2: #efe6d5;
+  --color-surface: #fffdf8;
+  --color-ink: #21302a;
+  --color-ink-soft: #6b7269;
+  --color-line: #e6ddcb;
+  --color-line-strong: #d9cdb4;
 
-  --color-wine: #7a1f33;
-  --color-wine-dark: #5e1626;
-  --color-forest: #2f5d3f;
-  --color-forest-dark: #234a31;
-  --color-gold: #b48a4a;
-  --color-gold-dark: #916a30;
-  --color-terracotta: #a23824;
-  --color-terracotta-dark: #852c1b;
+  /* Deep teal-green brand (navbar, footer, dark surfaces) */
+  --color-brand: #16261e;
+  --color-brand-2: #1f3b2d;
+  --color-brand-deep: #0f1b15;
+
+  /* Orange accent — the single signature colour */
+  --color-accent: #e07d3b;
+  --color-accent-dark: #c26327;
+  --color-accent-soft: #f5e0cd;
+
+  /* Back-compat aliases so existing utilities keep working, remapped
+     onto the new palette (wine/gold => accent orange). */
+  --color-wine: #e07d3b;
+  --color-wine-dark: #c26327;
+  --color-gold: #e07d3b;
+  --color-gold-dark: #b85f24;
+
+  /* Semantic status colours */
+  --color-forest: #2f6d4a;
+  --color-forest-dark: #1f4a31;
+  --color-terracotta: #b5432b;
+  --color-terracotta-dark: #8c331f;
 }
 
 /* ---------- Base element styling ---------- */
 @layer base {
   body {
     @apply bg-parchment text-ink font-sans antialiased;
-    background-image: radial-gradient(circle at 50% -10%, #fbf6ea 0%, #f3ecdd 55%, #efe6d3 100%);
+    background-image: radial-gradient(circle at 50% -8%, #fbf5e9 0%, #f4ede0 52%, #eee4d2 100%);
     background-attachment: fixed;
     min-height: 100vh;
   }
@@ -41,40 +57,49 @@
   h3 {
     @apply font-display font-semibold tracking-tight;
   }
-  /* All text inputs and selects share the classic parchment field style. */
+  /* All text inputs and selects share the classic field style. */
   input,
   select {
-    @apply mt-1.5 w-full rounded-md border border-line-strong bg-surface px-3 py-2.5 text-[15px] text-ink transition
-      focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/25;
+    @apply mt-1.5 w-full rounded-lg border border-line-strong bg-surface px-3 py-2.5 text-[15px] text-ink transition
+      focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/25;
   }
   a {
-    @apply font-semibold text-wine hover:text-wine-dark;
+    @apply font-semibold text-accent-dark hover:text-accent;
   }
-  /* Field labels are uppercase, spaced, muted. Override mb-0 inside inline form rows. */
+  /* Field labels are uppercase, spaced, muted. */
   label {
     @apply mb-4 block text-xs font-bold uppercase tracking-wide text-ink-soft;
   }
 }
 
-/* ---------- Reusable component atoms (buttons repeat with variants) ---------- */
+/* ---------- Reusable component atoms ---------- */
 @layer components {
   .btn {
-    @apply inline-flex cursor-pointer items-center justify-center rounded-md bg-wine px-5 py-2.5
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg bg-accent px-5 py-2.5
       text-sm font-bold tracking-wide text-white shadow-sm transition
-      hover:brightness-110 active:translate-y-px
+      hover:brightness-105 active:translate-y-px
       disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:brightness-100;
   }
   .btn-primary {
-    @apply bg-wine;
+    @apply bg-accent hover:bg-accent-dark hover:brightness-100;
+  }
+  /* Dark, sophisticated secondary action (mirrors the reference "FOOD MENU" button). */
+  .btn-brand {
+    @apply bg-brand hover:bg-brand-2 hover:brightness-100;
   }
   .btn-danger {
-    @apply bg-terracotta;
+    @apply bg-terracotta hover:bg-terracotta-dark hover:brightness-100;
   }
   .btn-ghost {
-    @apply border border-line-strong bg-transparent text-ink shadow-none hover:bg-black/5 hover:brightness-100;
+    @apply border border-line-strong bg-transparent text-ink shadow-none hover:bg-brand/5 hover:brightness-100;
   }
   .btn-sm {
-    @apply px-3 py-1.5 text-xs;
+    @apply gap-1.5 px-3 py-1.5 text-xs;
+  }
+
+  /* Give inline icons a consistent baseline inside buttons/titles. */
+  .icon {
+    @apply inline-block shrink-0 align-[-0.125em];
   }
 
   /* Page shell */
@@ -82,14 +107,17 @@
     @apply mx-auto w-full max-w-[1080px] px-6;
   }
 
-  /* Cards with a soft classic shadow */
+  /* Cards with a soft shadow */
   .card {
-    @apply mb-6 rounded-lg border border-line bg-surface p-6 shadow-[0_1px_2px_rgba(43,38,32,0.05),0_8px_24px_rgba(43,38,32,0.06)] md:p-7;
+    @apply mb-6 rounded-2xl border border-line bg-surface p-6 shadow-[0_1px_2px_rgba(15,27,21,0.05),0_10px_30px_rgba(15,27,21,0.07)] md:p-7;
   }
-  /* Section heading inside a card: gold underline accent */
+  /* Section heading inside a card: orange underline accent + leading icon slot */
   .card-title {
-    @apply relative mb-5 border-b border-line pb-3 text-2xl
-      after:absolute after:-bottom-px after:left-0 after:h-0.5 after:w-14 after:bg-gold after:content-[''];
+    @apply relative mb-5 flex items-center gap-2.5 border-b border-line pb-3 text-2xl text-ink
+      after:absolute after:-bottom-px after:left-0 after:h-0.5 after:w-14 after:bg-accent after:content-[''];
+  }
+  .card-title .icon {
+    @apply text-accent;
   }
 
   /* Data tables */
@@ -97,21 +125,21 @@
     @apply w-full border-collapse text-[14.5px];
   }
   .data-table thead th {
-    @apply border-b-2 border-line-strong bg-[#f6efdf] px-3.5 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-ink-soft;
+    @apply border-b-2 border-line-strong bg-[#f3ecdb] px-3.5 py-2.5 text-left text-[11px] font-bold uppercase tracking-wider text-ink-soft;
   }
   .data-table td {
     @apply border-b border-line px-3.5 py-3 text-left align-middle;
   }
   .data-table tbody tr:hover td {
-    @apply bg-[#fbf6ea];
+    @apply bg-[#faf4e8];
   }
 
   /* Status pills */
   .pill {
-    @apply inline-block rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide;
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[11px] font-bold uppercase tracking-wide;
   }
   .pill-confirmed {
-    @apply border border-[#cadfca] bg-[#e6efe6] text-forest-dark;
+    @apply border border-[#bcd8c6] bg-[#e4f0e8] text-forest-dark;
   }
   .pill-cancelled {
     @apply border border-[#ecccc2] bg-[#f6e5e0] text-terracotta-dark;
@@ -119,22 +147,30 @@
 
   /* Alerts */
   .alert {
-    @apply mb-4 rounded-md border-l-4 px-4 py-3 text-sm;
+    @apply mb-4 flex items-start gap-2 rounded-lg border-l-4 px-4 py-3 text-sm;
   }
   .alert-error {
     @apply border-terracotta bg-[#f8e8e2] text-terracotta-dark;
   }
   .alert-success {
-    @apply border-forest bg-[#e6efe6] text-forest-dark;
+    @apply border-forest bg-[#e4f0e8] text-forest-dark;
   }
 
   .muted {
     @apply text-[13.5px] text-ink-soft;
   }
 
-  /* Page heading with gold underline accent */
+  /* Page heading with orange underline accent */
   .page-title {
-    @apply relative mb-6 mt-9 flex items-center gap-3.5 border-b border-line pb-3.5 text-[34px]
-      after:absolute after:-bottom-px after:left-0 after:h-0.5 after:w-[60px] after:bg-gold after:content-[''];
+    @apply relative mb-6 mt-9 flex items-center gap-3.5 border-b border-line pb-3.5 text-[34px] text-ink
+      after:absolute after:-bottom-px after:left-0 after:h-0.5 after:w-[60px] after:bg-accent after:content-[''];
+  }
+  .page-title .icon {
+    @apply text-accent;
+  }
+
+  /* Small orange "kicker" label above headings */
+  .kicker {
+    @apply inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[3px] text-accent-dark;
   }
 }

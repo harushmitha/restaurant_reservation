@@ -2,6 +2,7 @@ import { useState } from "react";
 import { reservationApi, apiErrorMessage } from "../../api/client.js";
 import { TIME_SLOTS, todayStr } from "../../constants.js";
 import Alert from "../common/Alert.jsx";
+import { CalendarPlus, Calendar, Clock, Users, Search, Check } from "../common/icons.jsx";
 
 /**
  * Two-step booking: (1) check availability for date/slot/guests, (2) confirm a
@@ -70,13 +71,18 @@ export default function ReservationForm({ onBooked }) {
 
   return (
     <div className="card">
-      <h2 className="card-title">New reservation</h2>
+      <h2 className="card-title">
+        <CalendarPlus className="icon" size={20} />
+        New reservation
+      </h2>
       <Alert message={error} />
       <Alert type="success" message={success} />
 
       <form onSubmit={checkAvailability} className="flex flex-wrap items-end gap-4">
         <label className="mb-0 min-w-[140px] flex-1">
-          Date
+          <span className="inline-flex items-center gap-1.5">
+            <Calendar size={13} /> Date
+          </span>
           <input
             type="date"
             min={todayStr()}
@@ -86,7 +92,9 @@ export default function ReservationForm({ onBooked }) {
           />
         </label>
         <label className="mb-0 min-w-[140px] flex-1">
-          Time slot
+          <span className="inline-flex items-center gap-1.5">
+            <Clock size={13} /> Time slot
+          </span>
           <select value={form.timeSlot} onChange={(e) => update({ timeSlot: e.target.value })}>
             {TIME_SLOTS.map((s) => (
               <option key={s} value={s}>
@@ -96,7 +104,9 @@ export default function ReservationForm({ onBooked }) {
           </select>
         </label>
         <label className="mb-0 min-w-[140px] flex-1">
-          Guests
+          <span className="inline-flex items-center gap-1.5">
+            <Users size={13} /> Guests
+          </span>
           <input
             type="number"
             min={1}
@@ -106,6 +116,7 @@ export default function ReservationForm({ onBooked }) {
           />
         </label>
         <button className="btn btn-primary" disabled={busy}>
+          <Search size={16} />
           {busy ? "Checking…" : "Check availability"}
         </button>
       </form>
@@ -128,6 +139,7 @@ export default function ReservationForm({ onBooked }) {
                 </select>
               </label>
               <button className="btn btn-primary" onClick={book} disabled={busy}>
+                <Check size={16} />
                 {busy ? "Booking…" : "Confirm reservation"}
               </button>
               <p className="muted mt-2">{available.length} table(s) available.</p>
